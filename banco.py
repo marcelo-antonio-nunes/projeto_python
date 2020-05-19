@@ -23,16 +23,16 @@ def cadastrar():
     conn = sqlite3.connect("Banco.db");
     cursor = conn.cursor()
     try:
-        lista.append(input('MARCA:').upper())
-        lista.append((input('MODELO:').upper()))
+        lista.append(input('MARCA:').strip(' ').upper())
+        lista.append((input('MODELO:').strip(' ').upper()))
         lista.append(int(input('QUANTIDADE:')))
         lista.append(float(input('PREÇO:')))
         cursor.executemany("INSERT INTO conta(marca, modelo, quantidade, preco)VALUES(?,?,?,?)" \
                            , [(lista)])
         conn.commit()
         conn.close()
-    except:
-        print('ERROR!!!')
+    except ValueError:
+        print(ValueError)
         conn.close()
 
 
@@ -42,8 +42,8 @@ def adicionar():
     print('===========================')
     conn = sqlite3.connect("Banco.db");
     cursor = conn.cursor()
-    lista.append(input('MARCA:').upper())
-    lista.append((input('MODELO:').upper()))
+    lista.append(input('MARCA:').strip(' ').upper())
+    lista.append((input('MODELO:').strip(' ').upper()))
     lista.append(int(input('QUANTIDADE:')))
     lista.append(float(input('PREÇO:')))
     p = cursor.execute('select * from conta where modelo=?', [(lista[1])])
@@ -99,10 +99,46 @@ def pesquisarMod():
         print(i);
     conn.close()
 def estoque():
+    print("""
+=======================================
+| LISTA DE TODAS AS PLACAS EM ESTOQUE |
+=======================================
+    """)
     conn = sqlite3.connect("Banco.db");
     cursor = conn.cursor()
     cursor.execute('select * from conta')
     for i in cursor.fetchall():
-        print("-"*30)
+        print("-"*50)
+        print(i)
+    conn.close()
+
+def findMarca():
+    print("""
+==============================
+| BUSCA DE PLACAS POR MARCA  |
+==============================\n
+
+    """)
+    m=input("DIGITE A MARCA :").strip(' ').upper()
+    conn = sqlite3.connect("Banco.db");
+    cursor = conn.cursor()
+    cursor.execute('select * from conta where marca=?',[m])
+    for i in cursor.fetchall():
+        print("-" * 50)
+        print(i)
+    conn.close()
+def findMod():
+    print("""
+==============================
+| BUSCA DE PLACAS POR MARCA  |
+==============================\n
+
+    """)
+    m=input("DIGITE A MODELO :").strip(' ').upper()
+    conn = sqlite3.connect("Banco.db");
+    cursor = conn.cursor()
+    cursor.execute('select * from conta where modelo=?',[m])
+    for i in cursor.fetchall():
+        print("-" * 50)
         print(i)
     conn.close()
