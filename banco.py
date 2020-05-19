@@ -1,8 +1,8 @@
 import sqlite3
 
 sql = '''
-create table if not exists conta(id integer primary key autoincrement,\
-modelo text, quantidade integer, preco real,marca text unique(modelo))
+create table if not exists conta(id integer primary key autoincrement,
+marca text,modelo text, quantidade integer, preco real, unique(modelo))
 '''
 
 
@@ -23,10 +23,11 @@ def cadastrar():
     conn = sqlite3.connect("Banco.db");
     cursor = conn.cursor()
     try:
+        lista.append(input('MARCA:').upper())
         lista.append((input('MODELO:').upper()))
         lista.append(int(input('QUANTIDADE:')))
         lista.append(float(input('PREÇO:')))
-        cursor.executemany("INSERT INTO conta(modelo, quantidade, preco)VALUES(?,?,?)" \
+        cursor.executemany("INSERT INTO conta(marca, modelo, quantidade, preco)VALUES(?,?,?,?)" \
                            , [(lista)])
         conn.commit()
         conn.close()
@@ -41,24 +42,25 @@ def adicionar():
     print('===========================')
     conn = sqlite3.connect("Banco.db");
     cursor = conn.cursor()
+    lista.append(input('MARCA:').upper())
     lista.append((input('MODELO:').upper()))
     lista.append(int(input('QUANTIDADE:')))
     lista.append(float(input('PREÇO:')))
-    p = cursor.execute('select * from conta where modelo=?', [(lista[0])])
+    p = cursor.execute('select * from conta where modelo=?', [(lista[1])])
     if p.fetchone()!=None:
-        cursor.execute('UPDATE  conta set quantidade = quantidade +? where modelo =?', (lista[1], lista[0]))
-        cursor.execute('UPDATE  conta set preco=? where modelo =?', (lista[2], lista[0]))
+        cursor.execute('UPDATE  conta set quantidade = quantidade +? where modelo =?', (lista[2], lista[1]))
+        cursor.execute('UPDATE  conta set preco=? where modelo =?', (lista[3], lista[1]))
         conn.commit()
-        print(f'\n{lista[1]} PLACA MODELO {lista[0]} FOI ADICIONADA AO ESTOQUE! ')
+        print(f'\n{lista[2]} PLACA MARCA {lista[0]}  MODELO {lista[1]} FOI ADICIONADA AO ESTOQUE! ')
         conn.close()
     else:
-        print(f'NÃO NEM UMA PLACA MODELO {lista[0]} EM ESTOQUE !!!')
+        print(f'NÃO NEM UMA PLACA MODELO {lista[1]} EM ESTOQUE !!!')
         op = input('GOSTARIA DE CADASTRALA ?\nS)sim\nN)Não\n\n:').upper()
         if op=='S':
-            cursor.executemany("INSERT INTO conta(modelo, quantidade, preco)VALUES(?,?,?)" \
+            cursor.executemany("INSERT INTO conta(marca, modelo, quantidade, preco)VALUES(?,?,?,?)" \
                                , [(lista)])
             conn.commit()
-            print(f'\n{lista[1]} PLACA MODELO {lista[0]} FOI ADICIONADA AO ESTOQUE! ')
+            print(f'\n{lista[2]} PLACA MARCA {lista[0]}  MODELO {lista[1]} FOI ADICIONADA AO ESTOQUE! ')
             conn.close()
         elif op=='n':
             pass
@@ -74,14 +76,14 @@ def vender():
     lista.append(int(input('QUANTIDADE:')))
     try:
         cursor.execute('UPDATE  conta set quantidade = quantidade -? where quantidade >0 and modelo =?',
-                       (lista[1], lista[0]))
-        cursor.execute('UPDATE  conta set preco=? where modelo =?', (lista[2], lista[0]))
+                       (lista[2], lista[1]))
+        cursor.execute('UPDATE  conta set preco=? where modelo =?', (lista[3], lista[1]))
         conn.commit()
         cursor.execute('delete from conta where quantidade =0')
         conn.commit()
         conn.close()
     except:
-        print(f'\nNÃO TEMOS A PLACA {lista[0]} EM ESTOQUE! :(')
+        print(f'\nNÃO TEMOS A PLACA MARCA {lista[0]} E MODELO {lista[1]} EM ESTOQUE! :(')
 
 
 def pesquisarMod():

@@ -6,5 +6,5 @@ criarTabela();
 #cadastrar()
 #banco.pesquisarMod()
 #vender()
-#adicionar()
+adicionar()
 estoque()
