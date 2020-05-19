@@ -1,7 +1,9 @@
 #--coding:utf-8 
-import  banco
+from banco import *
 
-banco.criarTabela();
+criarTabela();
 
-#banco.cadastrar()
-banco.pesquisarMod()
+#cadastrar()
+#banco.pesquisarMod()
+vender()
+
