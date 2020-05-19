@@ -3,4 +3,5 @@ import  banco
 
 banco.criarTabela();
 
-banco.cadastrar()
+#banco.cadastrar()
+banco.pesquisarMod()
