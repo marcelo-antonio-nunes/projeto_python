@@ -26,13 +26,15 @@ def menu():
 ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 ||CADASTRO E CONTROLE DE ENTRADA E SAIDA DE PLACAS EM ESTOQUE ||
 ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
------------------------OPÇÕES---------------------------------
-C) -> CADASTRAR PLACA
-A) -> ADICIONAR PLACA CADASTRADA
-B) -> DAR BAIXA EM PLACA VENDIDA
-F) -> MODO DE BUSCA
-L) -> LISTAR TODAS AS PLACAS 
-S) -> SAIR DO PROGRAMA
+||---------------------OPÇÕES---------------------------------||
+||C) -> CADASTRAR PLACA                                       ||
+||A) -> ADICIONAR PLACA CADASTRADA                            ||
+||B) -> DAR BAIXA EM PLACA VENDIDA                            ||
+||F) -> MODO DE BUSCA                                         ||
+||L) -> LISTAR TODAS AS PLACAS                                ||
+||S) -> SAIR DO PROGRAMA                                      ||
+||------------------------------------------------------------||
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     """)
     return input('DIGITE SUA OPÇÃO :').upper()
 op =None
